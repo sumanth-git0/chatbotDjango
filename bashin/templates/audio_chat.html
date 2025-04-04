@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Audio Chats</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+        .chat-container { background: white; padding: 15px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h2 { color: #333; }
+    </style>
+</head>
+<body>
+    <h1>🎧 Audio Chats</h1>
+
+    {% for text in texts %}
+        <div class="chat-container">
+            <p><strong>Language:</strong> {{ text.chat.language }}</p>
+            <p><strong>User Audio:</strong> <audio controls src="../media/audio_recordings/{{ text.chat.user_audio }}"></audio></p>
+            <p>{{text.input_text}}</p>
+            <p><strong>Assistant Audio:</strong> <audio controls src="../media/audio_recordings/{{ text.chat.assistant_audio }}"></audio></p>
+            <p>{{text.response_text}}</p>
+        </div>
+    {% empty %}
+        <p>No chats found.</p>
+    {% endfor %}
+    <form method="post">
+        {% csrf_token %}
+        <input type="file">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
